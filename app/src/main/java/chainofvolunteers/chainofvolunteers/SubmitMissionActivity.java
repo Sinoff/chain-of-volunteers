@@ -24,12 +24,14 @@ import java.io.BufferedReader;
 import java.lang.StringBuffer;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import chainofvolunteers.chainofvolunteers.AppHelpers.JSONAdapter;
 import chainofvolunteers.chainofvolunteers.AppHelpers.Route;
+import chainofvolunteers.chainofvolunteers.AppHelpers.Segment;
 
 public class SubmitMissionActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -38,6 +40,8 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
     private JSONObject jo;
     private EditText mStartingLocation;
     private EditText mEndingLocation;
+    Route r;
+    ArrayList<Segment> segmentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,12 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
             public void onClick(View v) {
                 start_point = mStartingLocation.getText().toString();
                 end_point = mEndingLocation.getText().toString();
-                new HandleJSON().execute("");
+                if(start_point == "" | end_point == "") {
+                    //display an error message and ask them to input another address?
+                } else {
+                    new HandleJSON().execute("");
+                }
+
 
             }
         });
@@ -91,8 +100,9 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void handleJson() {
-        Route r = Route.GetInstance();
+        r = Route.GetInstance();
         r.jsonToList(jo);
+        segmentList = r.getList();
     }
 
     public void onBackPressed() {

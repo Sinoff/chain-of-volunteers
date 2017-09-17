@@ -34,6 +34,10 @@ public class Route {
         segments = new ArrayList<>();
     }
 
+    public ArrayList<Segment> getList()
+    {
+        return segments;
+    }
     public Route distributeRoute(LatLng start, LatLng end, String userName) {
         int s = 0;
         //Route r = new Route(); //moved up - probably can delete?
