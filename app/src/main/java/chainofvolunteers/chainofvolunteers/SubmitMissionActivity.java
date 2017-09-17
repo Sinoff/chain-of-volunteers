@@ -1,5 +1,6 @@
 package chainofvolunteers.chainofvolunteers;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -23,75 +24,15 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import chainofvolunteers.chainofvolunteers.AppHelpers.JSONAdapter;
+import chainofvolunteers.chainofvolunteers.AppHelpers.Route;
+
 public class SubmitMissionActivity extends AppCompatActivity implements OnMapReadyCallback{
 
 
-    private static final String USER_AGENT = "Mozilla/5.0";
-
-    static String start_point = "1234 Parkmont Ct. San Jose";
-    static String end_point = "1169 Robalo Ct. San Jose";
-    private static final String UTF8 = StandardCharsets.UTF_8.toString();
-
-    //static String maps_api_key = "AIzaSyCpuojrKYVJG2xuz7Crgw2rv11ueftv4_M";
-    static String directions_api_key = "AIzaSyAaSm6dUhCQ3cP_507jtiLWB3UL6I3H4TA";
-
-    public static URL getFullURL(String start_point, String end_point) {
-        String start_point_url = null;
-        String end_point_url = null;
-        try {
-            start_point_url = URLEncoder.encode(start_point, UTF8);
-            end_point_url = URLEncoder.encode(end_point, UTF8);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-        URL url = null;
-        try {
-            url = new URL("https://maps.googleapis.com/maps/api/directions/json?key="
-                    + directions_api_key + "&origin=" + start_point_url + "&destination=" + end_point_url);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        return url;
-    }
-
-    /**
-     * call this function and it returns the JSON Object
-     */
-
-    public static JSONObject getJson(String start_point, String end_point) {
-        URL url = getFullURL(start_point, end_point);
-        HttpURLConnection con = null;
-        try {
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", USER_AGENT);
-
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'GET' request to URL : " + url);
-            System.out.println("Response Code : " + responseCode);
-
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-
-            //print result
-            return new JSONObject(response.toString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-
+    private String  startPoint;
+    private String endPoint;
+    private JSONObject jo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +45,38 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions().position(new LatLng(42.3601, -71.0942)).title("Marker"));
+        startPoint = "1234 Parkmont Ct. San Jose";
+        endPoint = "1169 Robalo Ct. San Jose";
+        new HandleJSON().execute("");
+
+
     }
 
+
+    private class HandleJSON extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            jo = JSONAdapter.getJson(startPoint, endPoint);
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            handleJson();
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+    private void handleJson() {
+        Route r = new Route();
+        r.jsonToList(jo);
+    }
 }

@@ -19,7 +19,6 @@ import org.json.JSONArray;
 public class Route {
 
     ArrayList<Segment> segments;
-    Route r = new Route();
 
     public Route ()
     {
@@ -60,9 +59,10 @@ public class Route {
 
     public void jsonToList(JSONObject obj)
     {
-        JSONArray jsonSegments = null;
         try {
-            jsonSegments = obj.getJSONArray("routes").getJSONArray(3);
+            JSONArray jsonSegments = obj.getJSONArray("routes").getJSONObject(0).
+                    getJSONArray("legs").getJSONObject(0).getJSONArray("steps");
+            int s = jsonSegments.length();
             for (int i=0; i < jsonSegments.length(); i++)
             {
                 segments.add(new Segment
