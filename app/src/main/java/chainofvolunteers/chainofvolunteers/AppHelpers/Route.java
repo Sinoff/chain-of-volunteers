@@ -39,8 +39,7 @@ public class Route {
         return segments;
     }
     public Route distributeRoute(LatLng start, LatLng end, String userName) {
-        int s = 0;
-        //Route r = new Route(); //moved up - probably can delete?
+        int s;
         for (s = 0; s < segments.size(); s++)     //get first segment
         {
             Segment currSegment = (Segment) segments.get(s);
@@ -63,12 +62,6 @@ public class Route {
         }
         return this;
     }
-
-
-//    public double getSegmentDistance(Segment s)
-//    {
-//        return Math.sqrt(Math.pow((s.startPoint.latitude - s.endPoint.latitude),2) + Math.sqrt(Math.pow((s.startPoint.latitude - s.endPoint.latitude),2)));
-//    }
 
     public void jsonToList(JSONObject obj)
     {
