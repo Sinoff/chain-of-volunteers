@@ -45,16 +45,17 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mStartingLocation = (EditText)findViewById(R.id.startinglocation);
+        mEndingLocation = (EditText)findViewById(R.id.endinglocation);
+
         //when click
         Button submit = (Button)findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //? check?
-                EditText startingLocation = (EditText)findViewById(R.id.startinglocation);
-                start_point = startingLocation.getText().toString();
-                EditText endingLocation = (EditText)findViewById(R.id.endinglocation);
-                end_point = endingLocation.getText().toString();
+                start_point = mStartingLocation.getText().toString();
+                end_point = mEndingLocation.getText().toString();
                 new HandleJSON().execute("");
 
             }
