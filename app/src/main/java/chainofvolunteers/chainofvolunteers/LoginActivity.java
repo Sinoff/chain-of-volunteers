@@ -134,11 +134,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), R.string.login_error, Toast.LENGTH_SHORT).show();
         } else {
             /* Login success */
-
-
-//            Intent homePageActivity = new Intent(this, HomePageActivity.class);
-//            startActivity(homePageActivity);
-//            finish();
+            Intent i = new Intent(this, UserActivity.class);
+//            i.putExtra("userName", ownerName);
+            startActivity(i);
+            finish();
         }
     }
 
