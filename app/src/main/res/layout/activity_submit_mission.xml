@@ -40,7 +40,7 @@
         map:cameraBearing="0"
         map:cameraTargetLat="42.3601"
         map:cameraTargetLng="-71.0942"
-        map:cameraTilt="45"
+        map:cameraTilt="90"
         map:cameraZoom="13"
         map:mapType="normal"
         map:uiCompass="false"
