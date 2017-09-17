@@ -47,8 +47,10 @@ public class Route {
     }
     public static void main(String[] args) throws Exception {
         // parsing file "JSONExample.json"
-        Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
+        //Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
     }
     // typecasting obj to JSONObject
-    JSONObject jo = (JSONObject) obj;
+    //JSONObject jo = (JSONObject) obj;
 }
+
+//returns list of segments-which is a start point and end point in a flat.
