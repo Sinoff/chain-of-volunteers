@@ -1,14 +1,15 @@
 package chainofvolunteers.chainofvolunteers.AppHelpers;
 
+
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
+import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONArray;
 
 
 /**
@@ -17,12 +18,45 @@ import java.util.LinkedList;
 
 public class Route {
 
-    LinkedList<Segment> segments;
+    ArrayList<Segment> segments;
+    Route r = new Route();
 
     public Route ()
     {
-        segments = new LinkedList<>();
+        segments = new ArrayList<>();
     }
+
+    public Route distributeRoute(LatLng start, LatLng end, String userName) {
+        int s = 0;
+        //Route r = new Route(); //moved up - probably can delete?
+        for (s = 0; s < segments.size(); s++)     //get first segment
+        {
+            Segment currSegment = (Segment) segments.get(s);
+            if (start.equals(currSegment.startPoint)) {
+                currSegment.markSegmentTaken(userName);
+                break;
+            }
+        }
+        for (; s < segments.size(); s++) //add all other segments
+        {
+            Segment currSegment = (Segment) segments.get(s);
+            if (!end.equals(currSegment.endPoint)) {
+                currSegment.markSegmentTaken(userName);
+            }
+            else
+            {
+                currSegment.markSegmentTaken(userName);
+                break;
+            }
+        }
+        return this;
+    }
+
+
+//    public double getSegmentDistance(Segment s)
+//    {
+//        return Math.sqrt(Math.pow((s.startPoint.latitude - s.endPoint.latitude),2) + Math.sqrt(Math.pow((s.startPoint.latitude - s.endPoint.latitude),2)));
+//    }
 
     public void jsonToList(JSONObject obj)
     {
@@ -36,21 +70,16 @@ public class Route {
                                 jsonSegments.getJSONObject(i).getJSONObject("start_location").getDouble("lat"),
                                 jsonSegments.getJSONObject(i).getJSONObject("start_location").getDouble("lng"))
                                 ,
-                        new LatLng(
-                                jsonSegments.getJSONObject(i).getJSONObject("end_location").getDouble("lat"),
-                                jsonSegments.getJSONObject(i).getJSONObject("end_location").getDouble("lng"))
+                                new LatLng(
+                                        jsonSegments.getJSONObject(i).getJSONObject("end_location").getDouble("lat"),
+                                        jsonSegments.getJSONObject(i).getJSONObject("end_location").getDouble("lng"))
                         ));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    public static void main(String[] args) throws Exception {
-        // parsing file "JSONExample.json"
-        //Object obj = new JSONParser().parse(new FileReader("JSONExample.json"));
-    }
-    // typecasting obj to JSONObject
-    //JSONObject jo = (JSONObject) obj;
+
 }
 
 //returns list of segments-which is a start point and end point in a flat.

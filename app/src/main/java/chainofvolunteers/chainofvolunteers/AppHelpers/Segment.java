@@ -8,12 +8,18 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Segment {
 
-    LatLng      startPoint;
-    LatLng      endPoint;
+    public LatLng      startPoint;
+    public LatLng      endPoint;
+    public String      user;
 
     public Segment(LatLng start, LatLng end)
     {
         startPoint = start;
         endPoint = end;
+    }
+
+    public void markSegmentTaken(String u)
+    {
+        user = u;
     }
 }
