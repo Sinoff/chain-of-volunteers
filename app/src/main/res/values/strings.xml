@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">chainofvolunteers</string>
+
+    <!--facebook logging-->
+    <string name="facebook_app_id">279328795901089</string>
+    <string name="fb_login_protocol_scheme">fb279328795901089</string>
+    <string name="logged_in">Logged In!</string>
+    <string name="login_error">Error during login</string>
+
     <string name="title_activity_maps">Map</string>
 </resources>
