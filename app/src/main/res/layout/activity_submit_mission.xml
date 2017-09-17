@@ -6,7 +6,7 @@
     android:padding="30dp">
     <EditText
         android:id="@+id/startinglocation"
-        android:text="Starting Location"
+        android:hint="Starting Location"
         android:layout_height = "wrap_content"
         android:layout_width="match_parent"
         android:gravity="center"
@@ -14,33 +14,40 @@
 
     <EditText
         android:id="@+id/endinglocation"
-        android:text="Ending Location"
+        android:hint="Ending Location"
         android:layout_height = "wrap_content"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_marginBottom="10dp"/>
     <EditText
-        android:text="Description of Package to Deliver"
+        android:hint="Description of Package to Deliver"
         android:layout_height = "wrap_content"
         android:layout_width="match_parent"
         android:gravity="center"/>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraBearing="112.5"
-        map:cameraTargetLat="-33.796923"
-        map:cameraTargetLng="150.922433"
-        map:cameraTilt="30"
+        map:cameraBearing="0"
+        map:cameraTargetLat="42.3601"
+        map:cameraTargetLng="-71.0942"
+        map:cameraTilt="45"
         map:cameraZoom="13"
         map:mapType="normal"
         map:uiCompass="false"
         map:uiRotateGestures="true"
-        map:uiScrollGestures="false"
+        map:uiScrollGestures="true"
         map:uiTiltGestures="true"
-        map:uiZoomControls="false"
+        map:uiZoomControls="true"
         map:uiZoomGestures="true"/>
 
 </LinearLayout>

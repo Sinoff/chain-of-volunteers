@@ -3,6 +3,9 @@ package chainofvolunteers.chainofvolunteers;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -29,10 +32,12 @@ import chainofvolunteers.chainofvolunteers.AppHelpers.Route;
 
 public class SubmitMissionActivity extends AppCompatActivity implements OnMapReadyCallback{
 
-
-    private String  startPoint;
-    private String endPoint;
+    static String start_point = "1234 Parkmont Ct. San Jose";
+    static String end_point = "1169 Robalo Ct. San Jose";
     private JSONObject jo;
+    private EditText mStartingLocation;
+    private EditText mEndingLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,16 +45,25 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //when click
+        Button submit = (Button)findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //? check?
+                EditText startingLocation = (EditText)findViewById(R.id.startinglocation);
+                start_point = startingLocation.getText().toString();
+                EditText endingLocation = (EditText)findViewById(R.id.endinglocation);
+                end_point = endingLocation.getText().toString();
+                new HandleJSON().execute("");
+
+            }
+        });
     }
 
     @Override
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions().position(new LatLng(42.3601, -71.0942)).title("Marker"));
-        startPoint = "1234 Parkmont Ct. San Jose";
-        endPoint = "1169 Robalo Ct. San Jose";
-        new HandleJSON().execute("");
-
-
     }
 
 
@@ -57,7 +71,7 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
 
         @Override
         protected String doInBackground(String... params) {
-            jo = JSONAdapter.getJson(startPoint, endPoint);
+            jo = JSONAdapter.getJson(start_point, end_point);
             return "Executed";
         }
 
