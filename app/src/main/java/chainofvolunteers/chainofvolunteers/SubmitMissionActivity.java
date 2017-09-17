@@ -1,5 +1,6 @@
 package chainofvolunteers.chainofvolunteers;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -53,7 +54,6 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //? check?
                 start_point = mStartingLocation.getText().toString();
                 end_point = mEndingLocation.getText().toString();
                 new HandleJSON().execute("");
@@ -91,7 +91,14 @@ public class SubmitMissionActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void handleJson() {
-        Route r = new Route();
+        Route r = Route.GetInstance();
         r.jsonToList(jo);
     }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

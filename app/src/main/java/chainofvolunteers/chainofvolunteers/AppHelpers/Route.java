@@ -4,8 +4,7 @@ package chainofvolunteers.chainofvolunteers.AppHelpers;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
 
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -19,8 +18,18 @@ import org.json.JSONArray;
 public class Route {
 
     ArrayList<Segment> segments;
-
-    public Route ()
+    private static Route r;
+    //MAKING IT SINGELTON FOR COMPETITION ONLY
+    public static Route GetInstance()
+    {
+        if (r==null) {
+            Route r = new Route();
+            return r;
+        }
+        else
+            return r;
+    }
+    protected Route ()
     {
         segments = new ArrayList<>();
     }
